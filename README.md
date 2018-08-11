@@ -35,7 +35,7 @@ replace perfix as you like and token by your own
 
 ### Start the bot
  - **Linux and macOS :** `python3 infosec.py` 
- - **Windows :** `py infosec.py`
+ - **Windows :** `py infosec.py` or just double click :) 
  
  
 ### Commands 
@@ -52,5 +52,5 @@ available commands :
  ## Who am i ?
  Ahmad A. Alsrehy
  
- Twitter : [@ADsecu](http://twitter.com/adsecu) 
+ Twitter : [@ADsecu](http://twitter.com/adsecu) +1
  
