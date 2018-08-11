@@ -10,7 +10,7 @@ from math import ceil
 from copy import deepcopy
 from datetime import datetime
 from discord.ext import commands
-from utils.chat_formatting import box, pagify
+from utils.chat_formatting import box, pagify # this modules from Red-Discordbot
 from collections import deque, defaultdict, OrderedDict
 
 
