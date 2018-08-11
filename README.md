@@ -1,5 +1,5 @@
 # Discord-infosec
-get info,channels, messages from servers , discord.py
+get info,channels, messages from servers , 
 **simple** code(bot) for get info from servers , using discord.py
 
 If someone invited your bot to his server,or you invited a stranger bot to your server 
