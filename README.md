@@ -52,5 +52,5 @@ available commands :
  ## Who am i ?
  Ahmad A. Alsrehy
  
- Twitter : [@ADsecu](http://twitter.com/adsecu) +1
+ Twitter : [@ADsecu](http://twitter.com/adsecu) 
  
