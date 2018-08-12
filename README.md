@@ -46,7 +46,7 @@ available commands :
 !inv : Get an invite from choosen server
 !chatlog : Save last 1500 messages from all chats
 !tc = Get all text channels
-!vm = Get all voice channels with members```
+!vm = Get all voice channels with members
 ```
 
  ## Who am i ?
