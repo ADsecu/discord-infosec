@@ -20,7 +20,7 @@ token = "Token Here"
 
 
 bot = commands.Bot(command_prefix=prefix)
-file = '/{}.txt' # for chatlog temp_save , maybe you face errors in windows 
+file = '/{}.txt' # for chatlog temp_save , maybe you face errors in windows
 are_you_windows = os.name == "nt"
 help_note = """
 
@@ -48,6 +48,7 @@ async def on_ready():
     print("MY  PREFIX  IS: "+ prefix)
     print('---------------------\n')
 #    print(bot.user.id)
+
 
 
 
@@ -107,21 +108,39 @@ async def _channels_forward(server, owner, ctx):
 
 async def _get_invite(server, owner, ctx):
         answers = ("yes", "y")
-        channel_id = []
-        _AD = 1
+        channels_li = []
+        _ad = 1
         _you = 0
+
         for channel in server.channels:
-            if channel.permissions_for(server.me).create_instant_invite == True:
-                pass
-        invite = await ctx.bot.create_invite(channel, max_age = 60*60)
-        if _AD != _you:
-            await ctx.bot.say("are you sure ?**(yes/no)**\n- server name : {}".format(server.name))
+            if channel.type == discord.ChannelType.voice:
+                if (channel.permissions_for(server.me).create_instant_invite or
+                                            channel.permissions_for(server.me).create_instant_invite == True):
+                    channels_li.append(channel)
+                    # Deep search for channels can user or bot can create_invite :)
+            elif channel.type == discord.ChannelType.text:
+                if (channel.permissions_for(server.me).create_instant_invite or
+                                            channel.permissions_for(server.me).create_instant_invite == True):
+                    channels_li.append(channel)
+
+
+        if len(channels_li) > 0:
+            await ctx.bot.say("**{} Channels with create_invite = __True__**".format(len(channels_li)))
+            invite = await ctx.bot.create_invite(destination = channels_li[0], max_age = 60*60)
+        else:
+             await ctx.bot.say("**No channels with create_invite permissions**")
+             return
+
+        if _ad != _you:
+            await ctx.bot.say("are you sure ? **(yes/no)**\n- server name: {}\n- server ID: {}"
+                                                            .format(server.name, server.id))
             try:
                 await ctx.bot.say("- server icon:\n{}".format(server.icon_url))
             except discord.HTTPException:
-                pass
                 await ctx.bot.say("server has no avatar")
-            msg = await ctx.bot.wait_for_message(author=owner, timeout=30)
+                pass
+
+            msg = await ctx.bot.wait_for_message(author=owner, timeout=20)
             if msg is None:
                 await ctx.bot.delete_invite(invite)
                 await ctx.bot.say("I guess not.")
@@ -143,11 +162,6 @@ async def _voice_members(server, owner, ctx):
                     members = voice_channel.voice_members
                     member_names = '\n....'.join([x.mention for x in members])
                     channel_count.append(members)
-
-                    #embed = discord.Embed(title = "{}".format(voice_channel.name),
-                    #                        description = "{}".format(member_names),
-                    #color=discord.Color.red())
-                    #await ctx.bot.say(embed=embed)
                     await ctx.bot.say("**:loud_sound: {} :**\n....{}".format(voice_channel.name,
                                                                                 member_names))
                 if channel.permissions_for(server.me).connect == False:
@@ -218,7 +232,7 @@ async def inv(ctx, idnum=None):
             for page in pagify(msg, delims=["\n"]):
                 await ctx.bot.say(box(page))
                 await asyncio.sleep(1.0) # for inegrity and rate limite
-            msg = await ctx.bot.wait_for_message(author=owner, timeout=30)
+            msg = await ctx.bot.wait_for_message(author=owner, timeout=20)
             if msg is not None:
                 try:
                     msg = int(msg.content.strip())
@@ -231,7 +245,7 @@ async def inv(ctx, idnum=None):
                     try:
                         await _get_invite(server, owner, ctx)
                     except discord.Forbidden:
-                        await ctx.bot.say("**I'm not allowed to make an invite"
+                        await ctx.bot.say("**I'm not allowed to delete an invite"
                                            " for {}**".format(server.id))
             else:
                 await ctx.bot.say("Response timed out.")
