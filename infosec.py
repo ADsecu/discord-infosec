@@ -20,7 +20,7 @@ token = "Token Here"
 
 
 bot = commands.Bot(command_prefix=prefix)
-file = '/{}.txt' # for chatlog temp_save , maybe you face errors in windows
+file = '/{}.txt' # for chatlog temp_save , maybe you face errors in windows.
 are_you_windows = os.name == "nt"
 help_note = """
 
